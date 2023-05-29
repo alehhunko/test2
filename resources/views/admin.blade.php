@@ -1,44 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Main</title>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{asset('js/app.js')}}" defer></script>
 </head>
 
-<body>
-    <div id="app">
-        @if (Route::has('login'))
-        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            @auth
-            <a href="{{ url('/home') }}" class="text-sm text-gray-700 underline">Home</a>
-            @else
-            <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
+<body class="antialiased">
 
-            @if (Route::has('register'))
-            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            @if (Route::has('login'))
+            <div class="navbar-nav">
+
+                @auth
+                <a class="nav-item nav-link" href="{{ url('/home') }}">User account</a>
+                @else
+                <a class="nav-item nav-link" href="{{ route('login') }}">Log in</a>
+
+                @if (Route::has('register'))
+                <a class="nav-item nav-link" href="{{ route('register') }}">Register</a>
+                @endif
+                @endauth
+            </div>
             @endif
-            @endauth
         </div>
-        @endif
-        <example-component></example-component>
-        <example-component></example-component>
+    </nav>
+
+
+    <div id="app">
+        <admin-component></admin-component>
     </div>
+
 </body>
 
 </html>
