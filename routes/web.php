@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('main');
-})->name('main');
+Route::get('/', [App\Http\Controllers\Controller::class, 'index'])->name('main');
 
 Route::get('/admin', function () {
     return view('admin');
