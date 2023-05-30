@@ -15,6 +15,7 @@ class Controller extends BaseController
 
     public function index()
     {
+        // dd(auth()->user()->id);
         // $user=User::find(1);
         // $filter=$user->messages;
         // dd(compact('filter'));

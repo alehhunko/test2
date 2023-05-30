@@ -5173,31 +5173,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      clients: null,
-      messages: null
+      messages: [],
+      content_eath: '',
+      content_family: '',
+      content_work: '',
+      content_policy: ''
     };
   },
   methods: {
     getMessage: function getMessage() {
       var _this = this;
       axios.get('api/client').then(function (response) {
-        _this.messages = response.data[0];
+        _this.messages = response.data;
       });
     },
-    getClient: function getClient() {
-      var _this2 = this;
-      axios.get('api/client').then(function (response) {
-        _this2.clients = response.data[1];
+    addClient: function addClient() {
+      axios.post('api/new', {
+        content_eath: this.content_eath,
+        content_family: this.content_family,
+        content_work: this.content_work,
+        content_policy: this.content_policy,
+        user_id: this.messages[2]
+      }).then(function (res) {
+        return console.log(res.data);
       });
     }
   },
   mounted: function mounted() {
     this.getMessage();
-    this.getClient();
   }
 });
 
@@ -28137,7 +28152,137 @@ var render = function () {
       _vm._v("\n        Новая заявка\n    "),
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _c("table", { staticClass: "table" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("tbody", [
+        _c("tr", [
+          _c("td", [
+            _c("div", { staticClass: "form-group" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.content_eath,
+                    expression: "content_eath",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { rows: "3" },
+                domProps: { value: _vm.content_eath },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.content_eath = $event.target.value
+                  },
+                },
+              }),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c("div", { staticClass: "form-group" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.content_family,
+                    expression: "content_family",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { rows: "3" },
+                domProps: { value: _vm.content_family },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.content_family = $event.target.value
+                  },
+                },
+              }),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c("div", { staticClass: "form-group" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.content_work,
+                    expression: "content_work",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { rows: "3" },
+                domProps: { value: _vm.content_work },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.content_work = $event.target.value
+                  },
+                },
+              }),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c("div", { staticClass: "form-group" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.content_policy,
+                    expression: "content_policy",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { rows: "3" },
+                domProps: { value: _vm.content_policy },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.content_policy = $event.target.value
+                  },
+                },
+              }),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c("div", { staticClass: "d-flex align-items-center" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  staticStyle: { "margin-top": "15%" },
+                  attrs: { type: "button" },
+                  on: {
+                    click: function ($event) {
+                      $event.preventDefault()
+                      return _vm.addClient.apply(null, arguments)
+                    },
+                  },
+                },
+                [_vm._v("Подтвердить")]
+              ),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center text-uppercase" }, [
       _vm._v("\n        Заявки Клиентов\n    "),
@@ -28148,14 +28293,14 @@ var render = function () {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.messages, function (message) {
+        _vm._l(_vm.messages[0], function (message) {
           return _c(
             "tr",
             [
-              _vm._l(_vm.clients, function (client) {
+              _vm._l(_vm.messages[1], function (client) {
                 return client.id === message.user_id
                   ? _c("th", { attrs: { scope: "row" } }, [
-                      _vm._v(_vm._s(client.name)),
+                      _vm._v(_vm._s(client.name) + "\n                "),
                     ])
                   : _vm._e()
               }),
@@ -28181,57 +28326,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", { staticClass: "table" }, [
-      _c("thead", [
-        _c("tr", [
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Земельные споры")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Семейные споры")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Трудовые споры")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Споры с ГИБДД")]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("tbody", [
-        _c("tr", [
-          _c("td", [
-            _c("div", { staticClass: "form-group" }, [
-              _c("textarea", {
-                staticClass: "form-control",
-                attrs: { id: "exampleFormControlTextarea1", rows: "3" },
-              }),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("td", [
-            _c("div", { staticClass: "form-group" }, [
-              _c("textarea", {
-                staticClass: "form-control",
-                attrs: { id: "exampleFormControlTextarea1", rows: "3" },
-              }),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("td", [
-            _c("div", { staticClass: "form-group" }, [
-              _c("textarea", {
-                staticClass: "form-control",
-                attrs: { id: "exampleFormControlTextarea1", rows: "3" },
-              }),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("td", [
-            _c("div", { staticClass: "form-group" }, [
-              _c("textarea", {
-                staticClass: "form-control",
-                attrs: { id: "exampleFormControlTextarea1", rows: "3" },
-              }),
-            ]),
-          ]),
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Земельные споры")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Семейные споры")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Трудовые споры")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Споры с ГИБДД")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Отправить")]),
       ]),
     ])
   },
@@ -28250,6 +28355,8 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Трудовые споры")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Споры с ГИБДД")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Статус")]),
       ]),
     ])
   },

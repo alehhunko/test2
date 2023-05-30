@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/client', [MessageController::class, 'index']);
 
+Route::post('/new', [MessageController::class, 'add_client']);
