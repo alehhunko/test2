@@ -11,7 +11,7 @@
                     <th scope="col">Семейные споры</th>
                     <th scope="col">Трудовые споры</th>
                     <th scope="col">Споры с ГИБДД</th>
-                    <th scope="col">#</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -57,6 +57,7 @@
                     <th scope="col">Трудовые споры</th>
                     <th scope="col">Споры с ГИБДД</th>
                     <th scope="col">Статус</th>
+                    <th scope="col">Ответ на заявку</th>
                 </tr>
             </thead>
             <tbody>
@@ -67,10 +68,14 @@
                     <td>{{ message.content_family }}</td>
                     <td>{{ message.content_work }}</td>
                     <td>{{ message.content_policy }}</td>
-                    <td class="table-danger">{{ message.status }}</td>
-                    <td>
-                        <button @click.prevent="" type="button" class="btn btn-primary">Проблема решена</button>
+                    <td class="table-danger d-flex justify-content-between">
+                        {{ message.status }}
+                        <div v-if="message.coment !== null">
+                            <button @click.prevent="changeStatus(message.id)" type="button" class="btn btn-primary">Проблема
+                                решена</button>
+                        </div>
                     </td>
+                    <td>{{ message.coment }}</td>
                 </tr>
             </tbody>
         </table>
@@ -110,6 +115,11 @@ export default {
                     status: this.status,
                 })
                 .then(res => { this.getMessage() })
+        },
+
+        changeStatus(id) {
+            axios.patch(`api/client/${id}`)
+                .then(response => { this.getMessage() })
         }
     },
 

@@ -20,6 +20,7 @@ class CreateMessagesTable extends Migration
             $table->text('content_work')->nullable();
             $table->text('content_policy')->nullable();
             $table->text('status')->nullable();
+            $table->text('coment')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });

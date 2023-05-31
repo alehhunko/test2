@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\Controller::class, 'index'])->name('main');
 
-Route::get('/admin', function () {
-    return view('admin');
-})->middleware(AdminPanelMiddleWare::class);
+Route::get('/admin', [App\Http\Controllers\Controller::class, 'admin'])->middleware(AdminPanelMiddleWare::class)->name('admin');
 
 Auth::routes();
 

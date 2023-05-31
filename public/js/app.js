@@ -5087,10 +5087,62 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      messages: [],
+      content_eath: '',
+      content_family: '',
+      content_work: '',
+      content_policy: '',
+      status: 'Новая',
+      user_id: this.id
+    };
+  },
+  props: ['id'],
+  methods: {
+    getMessage: function getMessage() {
+      var _this = this;
+      axios.get('api/client').then(function (response) {
+        _this.messages = response.data;
+      });
+    },
+    changeStatus: function changeStatus(id) {
+      var _this2 = this;
+      axios.patch("api/lawyer/".concat(id)).then(function (response) {
+        _this2.getMessage();
+      });
+    }
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    this.getMessage();
   }
 });
 
@@ -5107,6 +5159,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5218,6 +5275,12 @@ __webpack_require__.r(__webpack_exports__);
         status: this.status
       }).then(function (res) {
         _this2.getMessage();
+      });
+    },
+    changeStatus: function changeStatus(id) {
+      var _this3 = this;
+      axios.patch("api/client/".concat(id)).then(function (response) {
+        _this3.getMessage();
       });
     }
   },
@@ -28117,20 +28180,92 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center text-uppercase" }, [
+      _vm._v("\n        Юрист\n    "),
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.messages[0], function (message) {
+          return _c(
+            "tr",
+            [
+              _vm._l(_vm.messages[1], function (client) {
+                return client.id === message.user_id
+                  ? _c("th", { attrs: { scope: "row" } }, [
+                      _vm._v(_vm._s(client.name) + "\n                "),
+                    ])
+                  : _vm._e()
+              }),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(message.content_eath))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(message.content_family))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(message.content_work))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(message.content_policy))]),
+              _vm._v(" "),
+              _c(
+                "td",
+                { staticClass: "table-danger d-flex justify-content-between" },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(message.status) +
+                      "\n                    "
+                  ),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.changeStatus(message.id)
+                        },
+                      },
+                    },
+                    [_vm._v("\n                        В работе")]
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(message.coment))]),
+            ],
+            2
+          )
+        }),
+        0
+      ),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [_vm._v("Юрист")]),
-          ]),
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Клиент")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Земельные споры")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Семейные споры")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Трудовые споры")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Споры с ГИБДД")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Статус")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Ответ на заявку")]),
       ]),
     ])
   },
@@ -28325,25 +28460,41 @@ var render = function () {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(message.content_policy))]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-danger" }, [
-                _vm._v(_vm._s(message.status)),
-              ]),
+              _c(
+                "td",
+                { staticClass: "table-danger d-flex justify-content-between" },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(message.status) +
+                      "\n                    "
+                  ),
+                  message.coment !== null
+                    ? _c("div", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.changeStatus(message.id)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "Проблема\n                            решена"
+                            ),
+                          ]
+                        ),
+                      ])
+                    : _vm._e(),
+                ]
+              ),
               _vm._v(" "),
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function ($event) {
-                        $event.preventDefault()
-                      },
-                    },
-                  },
-                  [_vm._v("Проблема решена")]
-                ),
-              ]),
+              _c("td", [_vm._v(_vm._s(message.coment))]),
             ],
             2
           )
@@ -28368,7 +28519,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Споры с ГИБДД")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _c("th", { attrs: { scope: "col" } }),
       ]),
     ])
   },
@@ -28389,6 +28540,8 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Споры с ГИБДД")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Статус")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Ответ на заявку")]),
       ]),
     ])
   },

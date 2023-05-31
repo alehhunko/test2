@@ -24,9 +24,22 @@ class MessageController extends Controller
             'content_work' => 'nullable|string|max:1000',
             'content_policy' => 'nullable|string|max:1000',
             'status' => 'nullable|string|max:1000',
+            'coment' => 'nullable|string|max:1000',
             'user_id' => 'integer',
         ]);
         $client = Message::create($data);
         return $client;
+    }
+
+    public function finish_status(Message $status)
+    {
+        $status_id = $status->update(['status'=>'Завершено']);
+        return $status_id;
+    
+    }
+    public function work_status(Message $status)
+    {
+        $status_id = $status->update(['status'=>'В работе']);
+        return $status_id;
     }
 }

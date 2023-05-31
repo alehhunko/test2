@@ -15,10 +15,13 @@ class Controller extends BaseController
 
     public function index()
     {
-        $user_id=auth()->user()->id??'None';
-        // $user=User::find(1);
-        // $filter=$user->messages;
-        // dd(compact('filter'));
-        return view('main', ['user_id'=>$user_id]);
+        $user_id = auth()->user()->id ?? 'None';
+        return view('main', ['user_id' => $user_id]);
+    }
+
+    public function admin()
+    {
+        $user_id = auth()->user()->id ?? 'None';
+        return view('admin', ['user_id' => $user_id]);
     }
 }
