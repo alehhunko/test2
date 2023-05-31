@@ -35,9 +35,8 @@
         </div>
     </nav>
 
-
     <div id="app">
-        <user-component></user-component>
+        <user-component :id='{{$user_id}}'></user-component>
     </div>
 
 </body>

@@ -5181,6 +5181,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -5189,9 +5194,12 @@ __webpack_require__.r(__webpack_exports__);
       content_eath: '',
       content_family: '',
       content_work: '',
-      content_policy: ''
+      content_policy: '',
+      status: 'Новая',
+      user_id: this.id
     };
   },
+  props: ['id'],
   methods: {
     getMessage: function getMessage() {
       var _this = this;
@@ -5200,14 +5208,16 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addClient: function addClient() {
+      var _this2 = this;
       axios.post('api/new', {
         content_eath: this.content_eath,
         content_family: this.content_family,
         content_work: this.content_work,
         content_policy: this.content_policy,
-        user_id: this.messages[2]
+        user_id: this.user_id,
+        status: this.status
       }).then(function (res) {
-        return console.log(res.data);
+        _this2.getMessage();
       });
     }
   },
@@ -28262,23 +28272,25 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("td", [
-            _c("div", { staticClass: "d-flex align-items-center" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  staticStyle: { "margin-top": "15%" },
-                  attrs: { type: "button" },
-                  on: {
-                    click: function ($event) {
-                      $event.preventDefault()
-                      return _vm.addClient.apply(null, arguments)
+            _vm.user_id > 0
+              ? _c("div", { staticClass: "d-flex align-items-center" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      staticStyle: { "margin-top": "15%" },
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.addClient.apply(null, arguments)
+                        },
+                      },
                     },
-                  },
-                },
-                [_vm._v("Подтвердить")]
-              ),
-            ]),
+                    [_vm._v("Отправить")]
+                  ),
+                ])
+              : _vm._e(),
           ]),
         ]),
       ]),
@@ -28312,6 +28324,26 @@ var render = function () {
               _c("td", [_vm._v(_vm._s(message.content_work))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(message.content_policy))]),
+              _vm._v(" "),
+              _c("td", { staticClass: "table-danger" }, [
+                _vm._v(_vm._s(message.status)),
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function ($event) {
+                        $event.preventDefault()
+                      },
+                    },
+                  },
+                  [_vm._v("Проблема решена")]
+                ),
+              ]),
             ],
             2
           )
@@ -28336,7 +28368,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Споры с ГИБДД")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Отправить")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
       ]),
     ])
   },

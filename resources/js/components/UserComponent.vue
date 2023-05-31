@@ -11,7 +11,7 @@
                     <th scope="col">Семейные споры</th>
                     <th scope="col">Трудовые споры</th>
                     <th scope="col">Споры с ГИБДД</th>
-                    <th scope="col">Отправить</th>
+                    <th scope="col">#</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,8 +37,9 @@
                         </div>
                     </td>
                     <td>
-                        <div class="d-flex align-items-center">
-                            <button @click.prevent="addClient" type="button" class="btn btn-primary" style="margin-top: 15%;">Подтвердить</button>
+                        <div v-if="user_id > 0" class="d-flex align-items-center">
+                            <button @click.prevent="addClient" type="button" class="btn btn-primary"
+                                style="margin-top: 15%;">Отправить</button>
                         </div>
                     </td>
                 </tr>
@@ -66,6 +67,10 @@
                     <td>{{ message.content_family }}</td>
                     <td>{{ message.content_work }}</td>
                     <td>{{ message.content_policy }}</td>
+                    <td class="table-danger">{{ message.status }}</td>
+                    <td>
+                        <button @click.prevent="" type="button" class="btn btn-primary">Проблема решена</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -81,8 +86,12 @@ export default {
             content_family: '',
             content_work: '',
             content_policy: '',
+            status: 'Новая',
+            user_id: this.id,
         }
     },
+
+    props: ['id'],
 
     methods: {
         getMessage() {
@@ -97,9 +106,10 @@ export default {
                     content_family: this.content_family,
                     content_work: this.content_work,
                     content_policy: this.content_policy,
-                    user_id: this.messages[2],
+                    user_id: this.user_id,
+                    status: this.status,
                 })
-                .then(res=>console.log(res.data))
+                .then(res => { this.getMessage() })
         }
     },
 
