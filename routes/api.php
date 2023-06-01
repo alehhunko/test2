@@ -26,3 +26,5 @@ Route::post('/new', [MessageController::class, 'add_client']);
 Route::patch('/client/{status}', [MessageController::class, 'finish_status']);
 
 Route::patch('/lawyer/{status}', [MessageController::class, 'work_status']);
+
+Route::patch('/coment/{coment}', [MessageController::class, 'coment']);

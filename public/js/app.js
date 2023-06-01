@@ -5113,17 +5113,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       messages: [],
-      content_eath: '',
-      content_family: '',
-      content_work: '',
-      content_policy: '',
-      status: 'Новая',
-      user_id: this.id
+      coment: '',
+      user_id: this.id,
+      visible: true,
+      textarea_id: null
     };
   },
   props: ['id'],
@@ -5139,6 +5153,17 @@ __webpack_require__.r(__webpack_exports__);
       axios.patch("api/lawyer/".concat(id)).then(function (response) {
         _this2.getMessage();
       });
+    },
+    pushComent: function pushComent(id) {
+      var _this3 = this;
+      this.visible = true, axios.patch("api/coment/".concat(id), {
+        coment: this.coment
+      }).then(function (response) {
+        _this3.getMessage();
+      });
+    },
+    addComent: function addComent(id) {
+      this.visible = false, this.textarea_id = id;
     }
   },
   mounted: function mounted() {
@@ -5159,6 +5184,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
 //
 //
 //
@@ -28212,31 +28241,119 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "td",
-                { staticClass: "table-danger d-flex justify-content-between" },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "p-3 mb-2 bg-warning text-dark rounded" },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(message.status) +
+                          "\n                    "
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  message.status == "Новая"
+                    ? [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.changeStatus(message.id)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              '\n                        Сменить на "в работе"'
+                            ),
+                          ]
+                        ),
+                      ]
+                    : _vm._e(),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "td",
                 [
                   _vm._v(
                     "\n                    " +
-                      _vm._s(message.status) +
+                      _vm._s(message.coment) +
                       "\n                    "
                   ),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function ($event) {
-                          $event.preventDefault()
-                          return _vm.changeStatus(message.id)
-                        },
-                      },
-                    },
-                    [_vm._v("\n                        В работе")]
-                  ),
-                ]
+                  _vm.visible
+                    ? _c("div", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.addComent(message.id)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "Редактировать\n                            ответ"
+                            ),
+                          ]
+                        ),
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.textarea_id === message.id && _vm.visible === false
+                    ? [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.coment,
+                              expression: "coment",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { rows: "3" },
+                          domProps: { value: _vm.coment },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.coment = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.pushComent(message.id)
+                              },
+                            },
+                          },
+                          [_vm._v("Отправить")]
+                        ),
+                      ]
+                    : _vm._e(),
+                ],
+                2
               ),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(message.coment))]),
             ],
             2
           )
@@ -28462,36 +28579,43 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "td",
-                { staticClass: "table-danger d-flex justify-content-between" },
                 [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(message.status) +
-                      "\n                    "
+                  _c(
+                    "div",
+                    { staticClass: "p-3 mb-2 bg-warning text-dark rounded" },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(message.status) +
+                          "\n                    "
+                      ),
+                    ]
                   ),
-                  message.coment !== null
-                    ? _c("div", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function ($event) {
-                                $event.preventDefault()
-                                return _vm.changeStatus(message.id)
-                              },
-                            },
-                          },
-                          [
-                            _vm._v(
-                              "Проблема\n                            решена"
-                            ),
-                          ]
-                        ),
-                      ])
+                  _vm._v(" "),
+                  message.status !== "Завершено"
+                    ? [
+                        message.coment !== null
+                          ? _c("div", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function ($event) {
+                                      $event.preventDefault()
+                                      return _vm.changeStatus(message.id)
+                                    },
+                                  },
+                                },
+                                [_vm._v('Сменить на "Завершено"')]
+                              ),
+                            ])
+                          : _vm._e(),
+                      ]
                     : _vm._e(),
-                ]
+                ],
+                2
               ),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(message.coment))]),
@@ -28529,7 +28653,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Клиент")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Имя клиента")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Земельные споры")]),
         _vm._v(" "),

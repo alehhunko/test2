@@ -33,13 +33,21 @@ class MessageController extends Controller
 
     public function finish_status(Message $status)
     {
-        $status_id = $status->update(['status'=>'Завершено']);
+        $status_id = $status->update(['status' => 'Завершено']);
         return $status_id;
-    
     }
     public function work_status(Message $status)
     {
-        $status_id = $status->update(['status'=>'В работе']);
+        $status_id = $status->update(['status' => 'В работе']);
         return $status_id;
+    }
+
+    public function coment(Request $request, Message $coment)
+    {
+        $data = $request->validate([
+            'coment' => 'nullable|string|max:1000',
+        ]);
+        $coment_id = $coment->update($data);
+        return $coment_id;
     }
 }

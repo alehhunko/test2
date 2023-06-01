@@ -51,7 +51,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Клиент</th>
+                    <th scope="col">Имя клиента</th>
                     <th scope="col">Земельные споры</th>
                     <th scope="col">Семейные споры</th>
                     <th scope="col">Трудовые споры</th>
@@ -68,12 +68,16 @@
                     <td>{{ message.content_family }}</td>
                     <td>{{ message.content_work }}</td>
                     <td>{{ message.content_policy }}</td>
-                    <td class="table-danger d-flex justify-content-between">
-                        {{ message.status }}
-                        <div v-if="message.coment !== null">
-                            <button @click.prevent="changeStatus(message.id)" type="button" class="btn btn-primary">Проблема
-                                решена</button>
+                    <td>
+                        <div class="p-3 mb-2 bg-warning text-dark rounded">
+                            {{ message.status }}
                         </div>
+                        <template v-if="message.status !== 'Завершено'">
+                            <div v-if="message.coment !== null">
+                                <button @click.prevent="changeStatus(message.id)" type="button"
+                                    class="btn btn-primary">Сменить на "Завершено"</button>
+                            </div>
+                        </template>
                     </td>
                     <td>{{ message.coment }}</td>
                 </tr>
